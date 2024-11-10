@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Assignment2.Entities.Course>
+
+<h1>All my courses</h1>
+<a asp-action="Create" class="btn btn-success">Add a New Course</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Instructor</th>
+            <th>Start Date</th>
+            <th>Room #</th>
+            <th># of students</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var course in Model)
+        {
+            <tr>
+                <td>@course.Name</td>
+                <td>@course.Instructor</td>
+                <td>@course.StartDate.ToString("d")</td>
+                <td>@course.RoomNumber</td>
+                <td>@course.Students.Count</td>
+                <td>
+                    <a asp-action="Manage" asp-route-id="@course.CourseId" class="btn btn-info">Manage</a> | 
+                    <a asp-action="Edit" asp-route-id="@course.CourseId" class="btn btn-primary">Edit</a>
+                    
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,19 @@
+﻿@model ConfirmEnrollmentViewModel
+
+<h2>Confirmation response</h2>
+
+<p><strong>You have been invited to enroll in the "@Model.CourseName" course!</strong></p>
+<p>Hey @Model.StudentName, you have been invited to enroll in the "@Model.CourseName" in room @Model.Room starting on @Model.StartDate.ToShortDateString() with instructor @Model.Instructor - we would be thrilled to have you join us but ask that you confirm your enrollment!</p>
+
+<form asp-action="ConfirmEnrollment" method="post">
+    <input type="hidden" asp-for="StudentId" />
+    <input type="hidden" asp-for="CourseId" />
+
+    <div class="form-group">
+        <label>Do you want to enroll?</label><br />
+        <input type="radio" asp-for="IsEnrolled" value="true" /> Yes
+        <input type="radio" asp-for="IsEnrolled" value="false" /> No
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit response</button>
+</form>
