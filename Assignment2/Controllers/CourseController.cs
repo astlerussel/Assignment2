@@ -12,9 +12,9 @@ namespace Assignment2.Controllers
     public class CourseController : BaseController
         {
             private readonly CourseManagementDbContext _context;
-            private readonly EmailService _emailService;
+            private readonly IEmailService _emailService;
 
-        public CourseController(CourseManagementDbContext context,EmailService emailService)
+        public CourseController(CourseManagementDbContext context,IEmailService emailService)
             {
            
             _context = context;
@@ -164,15 +164,16 @@ namespace Assignment2.Controllers
             foreach (var student in course.Students.Where(s => s.Status == EnrollmentStatus.ConfirmationMessageNotSent))
             {
                 student.Status = EnrollmentStatus.ConfirmationMessageSent;
+                var subject = $"Enrollment confirmation for \"{course.Name}\" required";
                 var confirmUrl = Url.Action("ConfirmEnrollment", "Course", new { courseId, studentId = student.StudentId }, protocol: HttpContext.Request.Scheme);
                 var message = $"<h1>Hello {student.Name}:</h1>" +
-                    $"<p>Your request to enroll in the course {course.Name} in room {course.RoomNumber} starting {course.StartDate.ToShortDateString()} with instructor {course.Instructor}.</p>" +
+                    $"<p>Your request to enroll in the course \"{course.Name}\" in room {course.RoomNumber} starting {course.StartDate.ToShortDateString()} with instructor {course.Instructor}.</p>" +
                     $"<p>We are pleased to have you in the course so if you could <a href='{confirmUrl}'>confirm your enrollment</a> as soon as possible that would be appreciated!</p>" +
                     $"<p>Sincerely,</p>" +
                     $"<p>The Course Manager App</p>";
                 
                 // Logic to send confirmation message (e.g., email) goes here
-                _emailService.SendEnrollmentConfirmation(student.Email, message);
+                _emailService.SendEnrollmentConfirmation(student.Email, message,subject);
             }
 
             _context.SaveChanges();

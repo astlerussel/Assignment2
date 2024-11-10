@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 var connstr = builder.Configuration.GetConnectionString("COURSE");
-builder.Services.AddScoped<EmailService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddDbContext<CourseManagementDbContext>(option => option.UseSqlServer(connstr));
 

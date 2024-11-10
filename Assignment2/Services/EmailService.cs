@@ -7,16 +7,16 @@
     using System.Threading.Tasks;
 
     
-        public class EmailService
+        public class EmailService : IEmailService
         {
-            public async Task SendEnrollmentConfirmation(string toEmail, string message)
+            public async Task SendEnrollmentConfirmation(string toEmail, string message,string subject)
             {
             
 
 
             var mailMessage = new MailMessage("astlerussel.test@gmail.com", toEmail)
                 {
-                    Subject = "Confirm Your Enrollment",
+                    Subject = subject,
                     Body = message,
                     IsBodyHtml = true
                 };

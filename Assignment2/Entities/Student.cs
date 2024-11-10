@@ -6,10 +6,10 @@ namespace Assignment2.Entities
     {
         public int StudentId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Student Name is Required")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Student Email is Required")]
         [EmailAddress]
         public string Email { get; set; }
 
